@@ -20,4 +20,6 @@ public class Estacion {
     private Long id;
     @Column(nullable = false)
     private String nombre; // Espacio1,espacio,etc
+    @Column(nullable=false)
+    private boolean activo=true;
 }

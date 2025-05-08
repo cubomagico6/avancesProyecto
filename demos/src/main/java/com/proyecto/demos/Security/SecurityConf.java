@@ -28,18 +28,21 @@ public class SecurityConf {
         .authorizeHttpRequests(authConfig->{
 
         // 🔓 Endpoints públicos (sin autenticación)
-        authConfig.requestMatchers(HttpMethod.POST, "/api/register").permitAll();
-        authConfig.requestMatchers(HttpMethod.POST, "/api/login").permitAll();
+        authConfig.requestMatchers(HttpMethod.POST, "/api/*").permitAll();
+        authConfig.requestMatchers(HttpMethod.GET, "/api/*").permitAll();
+        //authConfig.requestMatchers(HttpMethod.PUT, "/api/*").permitAll();
+        //authConfig.requestMatchers(HttpMethod.DELETE, "/api/*").permitAll();
         authConfig.requestMatchers("/error").permitAll();
 
         // 🔒 Endpoints protegidos por permisos
-        authConfig.requestMatchers(HttpMethod.GET, "/private/*").hasAuthority("READ");
-        authConfig.requestMatchers(HttpMethod.POST, "/home").hasAuthority("CREATE");
-        authConfig.requestMatchers(HttpMethod.PUT, "/formulario/**").hasAuthority("UPDATE");
+        authConfig.requestMatchers(HttpMethod.GET, "/api/*/{id}").hasAuthority("READ");
+        authConfig.requestMatchers(HttpMethod.POST, "/api/*/{id}").hasAuthority("CREATE");
+        authConfig.requestMatchers(HttpMethod.PUT, "/api/*/{id}").hasAuthority("UPDATE");
+        authConfig.requestMatchers(HttpMethod.DELETE, "/api/*/{id}").hasAuthority("DELETE");
 
         // 🔐 Endpoints protegidos por roles
-        authConfig.requestMatchers(HttpMethod.GET, "/admin").hasRole("ADMIN");
-        authConfig.requestMatchers(HttpMethod.GET, "/user").hasRole("USER");
+        authConfig.requestMatchers(HttpMethod.GET, "/api/atencion/*").hasRole("ADMINISTRADOR");
+        authConfig.requestMatchers(HttpMethod.GET, "api/servicios/*").hasRole("BARBERO");
 
     // ❌ Cualquier otra petición se bloquea
         authConfig.anyRequest().denyAll();

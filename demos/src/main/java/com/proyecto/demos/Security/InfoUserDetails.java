@@ -15,6 +15,7 @@ public class InfoUserDetails implements UserDetails{
     private String username;
     private String password;
     private List<GrantedAuthority> autoridades;
+    private boolean activo;
 
     public InfoUserDetails(Usuario usuario){
         username=usuario.getUsername();
@@ -23,6 +24,7 @@ public class InfoUserDetails implements UserDetails{
         .map(permisos->new SimpleGrantedAuthority(permisos.name()))
         .collect(Collectors.toList());
         autoridades.add(new SimpleGrantedAuthority("ROLE_".concat(usuario.getRol().name())));
+        activo=usuario.isActivo();
     }
 
     @Override
@@ -55,7 +57,7 @@ public class InfoUserDetails implements UserDetails{
     }
     @Override
     public boolean isEnabled() {
-        return true;
+        return activo;
     }
     
 }

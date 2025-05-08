@@ -36,4 +36,7 @@ public class Usuario{
 
     @Enumerated(EnumType.STRING)
     private Rol rol;
+
+    @Column(nullable=false)
+    private boolean activo=true;
 }

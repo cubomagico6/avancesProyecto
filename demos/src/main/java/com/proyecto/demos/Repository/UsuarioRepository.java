@@ -1,5 +1,6 @@
 package com.proyecto.demos.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,5 +10,7 @@ import com.proyecto.demos.Model.Usuario;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario,Long>{
-    Optional<Usuario> findByUsername(String username);
+    Optional<Usuario> findByUsernameAndActivoTrue(String username); //
+    List<Usuario> findByActivoTrue();
+    Optional<Usuario> findByIdAndActivoTrue(Long id);
 }
