@@ -26,8 +26,6 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
-    //Metodos, tener en cuenta el GlobalExceptionHandler
-
     @PostMapping
     public ResponseEntity<DtoUserResponse> crear(@RequestBody DtoUserRequest request){
         DtoUserResponse response=usuarioService.crear(request);
