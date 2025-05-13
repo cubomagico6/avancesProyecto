@@ -1,0 +1,64 @@
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h3>👥 Usuarios</h3>
+  <button class="btn btn-primary" (click)="crearUsuario()">➕ Nuevo Usuario</button>
+</div>
+<!-- Alertas -->
+ @if (mensajeExito) {
+<div class="alert alert-success d-flex align-items-center" role="alert">
+  <span class="me-2">✔️</span> {{ mensajeExito }}
+</div>    
+ }
+
+@if (mensajeError) {
+<div class="alert alert-danger d-flex align-items-center" role="alert">
+  <span class="me-2">❌</span> {{ mensajeError }}
+</div>
+}
+
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Correo</th>
+      <th>Usuario</th>
+      <th>Rol</th>
+      <th class="text-center">⚙️</th>
+    </tr>
+  </thead>
+  <tbody>
+    @if (usuarios.length > 0) {
+      @for (usuario of usuarios; track usuario.id) {
+        <tr>
+          <td>{{ usuario.id }}</td>
+          <td>{{ usuario.nombre }}</td>
+          <td>{{ usuario.correo }}</td>
+          <td>{{ usuario.username }}</td>
+          <td>{{ usuario.rol }}</td>
+          <td class="text-center">
+            <button
+              class="btn btn-sm btn-outline-warning me-2"
+              (click)="editarUsuario(usuario.id)"
+              title="Editar"
+            >
+              ✏️
+            </button>
+            <button
+              class="btn btn-sm btn-outline-danger"
+              (click)="eliminarUsuario(usuario.id)"
+              title="Eliminar"
+            >
+              🗑️
+            </button>
+          </td>
+        </tr>
+      }
+    } @else {
+      <tr>
+        <td colspan="6" class="text-center">ℹ️ No hay usuarios registrados.</td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+

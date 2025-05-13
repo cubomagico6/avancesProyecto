@@ -1,0 +1,18 @@
+<!-- Conectamos el formulario con el FormGroup -->
+<br>
+<form [formGroup]="formularioLogin" (ngSubmit)="login()">
+    <!-- Input de Nombre -->
+    <label for="username">Username:</label>
+    <input id="username" type="text" formControlName="username" required />
+
+    <!-- Input de Edad -->
+    <label for="password">Password:</label>
+    <input id="password" type="text" formControlName="password" required />
+    <button type="submit" [disabled]="formularioLogin.invalid">Guardar</button>
+</form>
+
+<!-- Mostrar los valores en tiempo real -->
+<h3>Datos del Formulario:</h3>
+<pre>{{ formularioLogin.value | json }}</pre>
+<br>
+<p>El formulario es valido? {{formularioLogin.valid}}</p>

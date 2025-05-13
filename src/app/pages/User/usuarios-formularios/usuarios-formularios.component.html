@@ -1,0 +1,136 @@
+<div class="container mt-4">
+  <h3 class="mb-4">{{ modoEditar ? '✏️ Editar Usuario' : '➕ Nuevo Usuario' }}</h3>
+
+  <form [formGroup]="formulario" (ngSubmit)="guardar()" novalidate>
+
+    <!-- Nombre -->
+    <div class="mb-3">
+      <label for="nombre" class="form-label">Nombre</label>
+      <input
+        id="nombre"
+        type="text"
+        class="form-control"
+        formControlName="nombre"
+        [class.is-invalid]="formulario.get('nombre')?.invalid && formulario.get('nombre')?.touched"
+        [class.is-valid]="formulario.get('nombre')?.valid && formulario.get('nombre')?.touched"
+      />
+      @if (formulario.get('nombre')?.invalid && formulario.get('nombre')?.touched) {
+        <div class="invalid-feedback">
+        🛑 El nombre es obligatorio.
+      </div>
+      }
+      @if (formulario.get('nombre')?.valid && formulario.get('nombre')?.touched ) {
+      <div class="valid-feedback">
+        ✅ Nombre válido.
+      </div>
+      }
+
+    </div>
+
+    <!-- Correo -->
+    <div class="mb-3">
+      <label for="correo" class="form-label">Correo</label>
+      <input
+        id="correo"
+        type="email"
+        class="form-control"
+        formControlName="correo"
+        [class.is-invalid]="formulario.get('correo')?.invalid && formulario.get('correo')?.touched"
+        [class.is-valid]="formulario.get('correo')?.valid && formulario.get('correo')?.touched"
+      />
+      @if (formulario.get('correo')?.invalid && formulario.get('correo')?.touched) {
+      <div class="invalid-feedback">
+        🛑 Correo electrónico inválido.
+      </div>
+      }
+      @if (formulario.get('correo')?.valid && formulario.get('correo')?.touched) {
+      <div class="valid-feedback">
+        ✅ Correo válido.
+      </div>
+      }
+    </div>
+
+    <!-- Username -->
+    <div class="mb-3">
+      <label for="username" class="form-label">Usuario</label>
+      <input
+        id="username"
+        type="text"
+        class="form-control"
+        formControlName="username"
+        [class.is-invalid]="formulario.get('username')?.invalid && formulario.get('username')?.touched"
+        [class.is-valid]="formulario.get('username')?.valid && formulario.get('username')?.touched"
+      />
+      @if (formulario.get('username')?.invalid && formulario.get('username')?.touched) {
+      <div class="invalid-feedback">
+        🛑 El nombre de usuario es obligatorio.
+      </div>
+      }
+      @if (formulario.get('username')?.valid && formulario.get('username')?.touched) {
+      <div class="valid-feedback">
+        ✅ Usuario válido.
+      </div>
+      }
+    </div>
+
+    <!-- Password -->
+    @if (!modoEditar) {
+    <div class="mb-3">
+        <label for="password" class="form-label">Contraseña</label>
+        <input
+        id="password"
+        type="password"
+        class="form-control"
+        formControlName="password"
+        [class.is-invalid]="formulario.get('password')?.invalid && formulario.get('password')?.touched"
+        [class.is-valid]="formulario.get('password')?.valid && formulario.get('password')?.touched"
+        />
+        @if (formulario.get('password')?.invalid && formulario.get('password')?.touched) {
+        <div class="invalid-feedback">
+        🛑 La contraseña es obligatoria.
+        </div>
+        }
+        @if (formulario.get('password')?.valid && formulario.get('password')?.touched) {
+        <div class="valid-feedback">
+        ✅ Contraseña válida.
+        </div>
+        }
+    </div>
+    }
+    <!-- Rol -->
+    <div class="mb-3">
+      <label for="rol" class="form-label">Rol</label>
+      <select
+        id="rol"
+        class="form-select"
+        formControlName="rol"
+        [class.is-invalid]="formulario.get('rol')?.invalid && formulario.get('rol')?.touched"
+        [class.is-valid]="formulario.get('rol')?.valid && formulario.get('rol')?.touched"
+      >
+        <option value="">Seleccione un rol</option>
+        <option value="ADMINISTRADOR">🛡️ ADMINISTRADOR</option>
+        <option value="BARBERO">👤 BARBERO</option>
+      </select>
+      @if (formulario.get('rol')?.invalid && formulario.get('rol')?.touched) {
+      <div class="invalid-feedback">
+        🛑 Debe seleccionar un rol.
+      </div>
+      }
+      @if (formulario.get('rol')?.valid && formulario.get('rol')?.touched) {
+      <div class="valid-feedback">
+        ✅ Rol válido.
+      </div>
+      }
+
+    </div>
+
+    <!-- Botones -->
+    <div class="mt-4">
+      <button type="submit" class="btn btn-success" [disabled]="formulario.invalid">
+        {{ modoEditar ? '💾 Actualizar' : '📝 Crear' }}
+      </button>
+      <button type="button" class="btn btn-secondary ms-2" (click)="cancelar()">↩️ Cancelar</button>
+    </div>
+  </form>
+</div>
+
