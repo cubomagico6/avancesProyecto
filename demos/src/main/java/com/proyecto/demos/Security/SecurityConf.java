@@ -30,7 +30,6 @@ public class SecurityConf {
         .csrf(csrfconfig->csrfconfig.disable())
         .sessionManagement(sessionMangConfig->sessionMangConfig.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authenticationProvider(authenticationProvider) //inyectamos nuestro Dao
-        //registramos nuestro filtro personalizado en el orden adecuado
         .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
         .authorizeHttpRequests(authConfig->{
 
