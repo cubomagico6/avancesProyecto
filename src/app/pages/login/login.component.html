@@ -1,18 +1,28 @@
-<!-- Conectamos el formulario con el FormGroup -->
-<br>
-<form [formGroup]="formularioLogin" (ngSubmit)="login()">
-    <!-- Input de Nombre -->
-    <label for="username">Username:</label>
-    <input id="username" type="text" formControlName="username" required />
+<div class="login-box">
+    <form [formGroup]="formularioLogin" (ngSubmit)="login()">
+        <h2>Admin Login</h2>
+        <div class="input-box">
+            <span class="icon"><ion-icon [icon]="mailIcon"></ion-icon></span>
+                <input id="username" type="text" formControlName="username" autocomplete="off" placeholder="Username">
+        </div>
+        <div class="input-box">
+        <span class="icon"><ion-icon [icon]="lockClosedIcon"></ion-icon></span>
+        <input id="password" type="password" formControlName="password" autocomplete="off" placeholder="Contraseña">
+        </div>
+        <div class="remember-forgot">
+        <label><input type="checkbox">Recuérdame</label>
+        <a href="#">¿Olvidaste tu contraseña?</a>
+        </div>
+        <button type="submit" [disabled]="formularioLogin.invalid">Ingresar</button>
+        <div class="register-link">
+        <p>¿No tienes una cuenta? <a href="#">Regístrate</a></p>
+        </div>
+    </form>
+</div>
 
-    <!-- Input de Edad -->
-    <label for="password">Password:</label>
-    <input id="password" type="text" formControlName="password" required />
-    <button type="submit" [disabled]="formularioLogin.invalid">Guardar</button>
-</form>
-
-<!-- Mostrar los valores en tiempo real -->
+<!-- Mostrar los valores en tiempo real, IGNORAR
 <h3>Datos del Formulario:</h3>
 <pre>{{ formularioLogin.value | json }}</pre>
 <br>
 <p>El formulario es valido? {{formularioLogin.valid}}</p>
+-->

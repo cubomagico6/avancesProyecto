@@ -1,0 +1,253 @@
+/* Estilos generales del componente de Login */
+:host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+    background-image: url("/assets/img/fondo.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+    animation: animateBg 5s linear infinite;
+    overflow-y: auto;
+    font-family: 'Poppins', sans-serif; /* Tipo de letra general */
+}
+
+@keyframes animateBg {
+    100% {
+        filter: hue-rotate(360deg);
+    }
+}
+
+.input-box input::placeholder {
+    color: rgba(255, 255, 255, 0.7); /* Un blanco ligeramente transparente */
+    font-size: 1rem; /* Mantén el tamaño de fuente similar al texto ingresado */
+    font-style: italic; /* Opcional: para que se distinga un poco del texto ingresado */
+}
+
+.login-box {
+    position: relative;
+    width: 90%;
+    max-width: 400px;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, .5);
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 20px;
+    box-sizing: border-box;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+}
+
+h2 {
+    font-size: 2rem;
+    color: #fff;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 25px;
+}
+
+.input-box {
+    position: relative;
+    width: 100%;
+    margin: 20px 0;
+    border-bottom: 2px solid #fff;
+}
+
+.input-box input {
+    width: 100%;
+    height: 50px;
+    background: transparent; /* Fondo normal transparente */
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    color: #fff; /* Texto normal blanco */
+    padding: 0 35px 0 5px;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+.input-box input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+    font-style: italic;
+}
+
+.input-box .icon {
+    position: absolute;
+    right: 8px;
+    top: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    color: #fff;
+    font-size: 1.2rem;
+}
+
+/* Estilos para el autocompletado - ¡Reforzando en todos los estados! */
+.input-box input:-webkit-autofill,
+.input-box input:-webkit-autofill:hover,
+.input-box input:-webkit-autofill:focus {
+    -webkit-text-fill-color: #fff !important;
+    -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+    box-shadow: 0 0 0px 1000px transparent inset !important;
+    font-family: 'Poppins', sans-serif !important;
+    font-size: 1rem !important;
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+    background-color: transparent !important; /* ¡Forzando el fondo transparente! */
+    color: #fff !important; /* ¡Forzando el color del texto! */
+}
+
+.remember-forgot {
+    width: 100%;
+    margin: 20px 0;
+    font-size: 0.9rem;
+    color: #fff;
+    display: flex;
+    justify-content: space-between; /* Mantiene los elementos en los extremos */
+    align-items: center;
+}
+
+.remember-forgot label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-right: 15px; /* Añade margen a la derecha del "Recuérdame" */
+}
+
+.remember-forgot label input {
+    margin-right: 6px;
+}
+
+.remember-forgot a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 15px; /* Añade margen a la izquierda de "¿Olvidaste tu contraseña?" */
+}
+
+.remember-forgot a:hover {
+    text-decoration: underline;
+}
+
+
+button[type="submit"] {
+    width: 100%;
+    height: 45px;
+    background: #fff;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    cursor: pointer;
+    font-size: 1rem;
+    color: #000;
+    font-weight: 600;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+button[type="submit"]:hover:not(:disabled) {
+    background-color: #f0f0f0;
+}
+
+button[type="submit"]:active:not(:disabled) {
+    transform: scale(0.98);
+}
+
+button[type="submit"]:disabled {
+    background-color: #ccc;
+    border-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+}
+
+.register-link {
+    font-size: 0.9rem;
+    color: #fff;
+    text-align: center;
+    margin-top: 20px; /* Aumenté un poco el margen */
+    width: 100%;
+}
+
+.register-link p {
+    margin: 0;
+}
+
+.register-link p a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.register-link p a:hover {
+    text-decoration: underline;
+}
+
+/* Media queries para pantallas más pequeñas (sin cambios relevantes para el orden/espaciado) */
+@media (max-width: 480px) {
+    :host {
+        padding: 15px;
+    }
+
+    .login-box {
+        width: 95%;
+        padding: 25px 15px;
+        max-height: calc(100vh - 30px);
+    }
+
+    h2 {
+        font-size: 1.75rem;
+        margin-bottom: 20px;
+    }
+
+    .input-box, .remember-forgot, button[type="submit"], .register-link {
+        max-width: none;
+    }
+
+    .input-box input,
+    button[type="submit"],
+    .register-link,
+    .remember-forgot {
+        font-size: 0.9rem;
+    }
+
+    button[type="submit"] {
+        height: 40px;
+    }
+}
+
+@media (max-width: 360px) {
+    :host {
+        padding: 10px;
+    }
+    .login-box {
+        padding: 20px 10px;
+        border-radius: 15px;
+        max-height: calc(100vh - 20px);
+    }
+
+    h2 {
+        font-size: 1.6rem;
+        margin-bottom: 15px;
+    }
+
+    .input-box {
+        margin: 15px 0; /* Ajusté un poco el margen en pantallas pequeñas */
+    }
+
+    .input-box input,
+    button[type="submit"],
+    .register-link,
+    .remember-forgot {
+        font-size: 0.85rem;
+    }
+}
+
