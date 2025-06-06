@@ -17,7 +17,7 @@ import com.proyecto.demos.Model.Usuario;
 import com.proyecto.demos.Service.Jwt.AuthenticationService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/auth")
 public class AuthController {
     @Autowired
     private AuthenticationService authenticationService;

@@ -2,6 +2,7 @@ package com.proyecto.demos.Security;
 
 import java.io.IOException;
 
+import org.antlr.v4.runtime.misc.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -38,17 +39,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
             String username=jwtService.extractUsername(token);
 
             if (username!= null && SecurityContextHolder.getContext().getAuthentication()==null) {
-                //aquí sí es necesario cargar desde la bd
+                //carga
                 UserDetails userDetails=userDetailsService.loadUserByUsername(username);
                 if (jwtService.isTokenValid(token, userDetails)) {
-                    //Aquí es donde sí se establece manualmente el contexto de seguridad
+                    //set al context
                     UsernamePasswordAuthenticationToken authToken=new UsernamePasswordAuthenticationToken(
-                        userDetails, null, //se evita setear el password
+                        userDetails, null, 
                         userDetails.getAuthorities());
                         SecurityContextHolder.getContext().setAuthentication(authToken);
                 }
                 
             }
-            filterChain.doFilter(request, response); //continua con la cadena de filtros
+            filterChain.doFilter(request, response); 
     }
 }

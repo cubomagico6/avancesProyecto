@@ -53,7 +53,6 @@ public class ServicioService {
     public void eliminar(Long id) {
         Servicio servicio = servicioRepository.findByIdAndActivoTrue(id)
                 .orElseThrow(() -> new EntityNotFoundException("Servicio no encontrado con id: " + id));
-
         servicio.setActivo(false);
         servicioRepository.save(servicio);
     }

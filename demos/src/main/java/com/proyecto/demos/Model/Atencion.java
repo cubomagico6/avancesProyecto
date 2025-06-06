@@ -40,11 +40,10 @@ public class Atencion {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Estado estado;
-    //This class mandará las relaciones
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "barbero_id")
-    private Usuario barbero; //usuario con rol de barbero
+    @JoinColumn(name = "empleado_id")
+    private Empleado barbero; //usuario con rol de barbero
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "estacion_id")
@@ -53,4 +52,18 @@ public class Atencion {
     @ManyToOne(optional = false)
     @JoinColumn(name = "servicio_id")
     private Servicio servicio;
+
+    @ManyToOne
+    @JoinColumn(name = "creado_por_admin_id", nullable = false) 
+    private Usuario creadoPor;
+
+    @Column(nullable = false, updatable = false) // No se actualiza una vez creado
+    private LocalDateTime fechaCreacion;
+
+    @ManyToOne
+    @JoinColumn(name = "ultima_modificacion_por_admin_id") // Puede ser nulo si nunca se modificó
+    private Usuario ultimaModificacionPor;
+
+    @Column // Puede ser nulo si nunca se modificó
+    private LocalDateTime fechaUltimaModificacion;
 }

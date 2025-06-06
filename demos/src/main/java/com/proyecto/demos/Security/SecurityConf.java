@@ -15,6 +15,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import com.proyecto.demos.Model.enums.Permisos;
+
 //EnabledWebSecurity
 @Configuration
 public class SecurityConf {
@@ -29,27 +31,51 @@ public class SecurityConf {
         .cors(cors -> cors.configurationSource(corsConfigurationSource()))
         .csrf(csrfconfig->csrfconfig.disable())
         .sessionManagement(sessionMangConfig->sessionMangConfig.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-        .authenticationProvider(authenticationProvider) //inyectamos nuestro Dao
+        .authenticationProvider(authenticationProvider) 
         .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
         .authorizeHttpRequests(authConfig->{
+                // 🔓 1. Endpoints públicos (login, error)
+                authConfig.requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll();
+                authConfig.requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll();
+                authConfig.requestMatchers("/error").permitAll();
 
-        // 🔓 Endpoints públicos (sin autenticación)
-        authConfig.requestMatchers(HttpMethod.POST, "/api/*").permitAll();
-        authConfig.requestMatchers(HttpMethod.GET, "/api/*").permitAll();
-        //authConfig.requestMatchers(HttpMethod.PUT, "/api/*").permitAll();
-        //authConfig.requestMatchers(HttpMethod.DELETE, "/api/*").permitAll();
-        authConfig.requestMatchers("/error").permitAll();
+                // 🔐 2. Reglas de Acceso (más específicas a más generales, por rol o permiso)
+                // Reglas para RECEPCIONISTA: Tienen prioridad sobre la regla general del ADMINISTRADOR si coinciden
+                // DASHBOARD
+                authConfig.requestMatchers(HttpMethod.GET, "/api/dashboard/**").hasRole("RECEPCIONISTA");
 
-        // 🔒 Endpoints protegidos por permisos
-        authConfig.requestMatchers(HttpMethod.GET, "/api/*/{id}").hasAuthority("READ");
-        authConfig.requestMatchers(HttpMethod.POST, "/api/*/{id}").hasAuthority("CREATE");
-        authConfig.requestMatchers(HttpMethod.PUT, "/api/*/{id}").hasAuthority("UPDATE");
-        authConfig.requestMatchers(HttpMethod.DELETE, "/api/*/{id}").hasAuthority("DELETE");
+                // Atenciones: CRUD completo para Recepcionista
+                authConfig.requestMatchers(HttpMethod.GET, "/api/atenciones/**").hasRole("RECEPCIONISTA");
+                authConfig.requestMatchers(HttpMethod.POST, "/api/atenciones/**").hasRole("RECEPCIONISTA");
+                authConfig.requestMatchers(HttpMethod.PUT, "/api/atenciones/**").hasRole("RECEPCIONISTA");
+                authConfig.requestMatchers(HttpMethod.DELETE, "/api/atenciones/**").hasRole("RECEPCIONISTA"); // RECEPCIONISTA ahora puede DELETE
 
-        // 🔐 Endpoints protegidos por roles
-        authConfig.requestMatchers(HttpMethod.GET, "/api/atencion/*").hasRole("ADMINISTRADOR");
-        authConfig.requestMatchers(HttpMethod.GET, "api/servicios/*").hasRole("BARBERO");
+                // Servicios: CRUD completo para Recepcionista
+                authConfig.requestMatchers(HttpMethod.GET, "/api/servicios/**").hasRole("RECEPCIONISTA");
+                authConfig.requestMatchers(HttpMethod.POST, "/api/servicios/**").hasRole("RECEPCIONISTA");
+                authConfig.requestMatchers(HttpMethod.PUT, "/api/servicios/**").hasRole("RECEPCIONISTA");
+                authConfig.requestMatchers(HttpMethod.DELETE, "/api/servicios/**").hasRole("RECEPCIONISTA"); // RECEPCIONISTA ahora puede DELETE
 
+                // Estaciones: CRUD completo para Recepcionista
+                authConfig.requestMatchers(HttpMethod.GET, "/api/estaciones/**").hasRole("RECEPCIONISTA");
+                authConfig.requestMatchers(HttpMethod.POST, "/api/estaciones/**").hasRole("RECEPCIONISTA");
+                authConfig.requestMatchers(HttpMethod.PUT, "/api/estaciones/**").hasRole("RECEPCIONISTA");
+                authConfig.requestMatchers(HttpMethod.DELETE, "/api/estaciones/**").hasRole("RECEPCIONISTA"); // RECEPCIONISTA ahora puede DELETE
+
+                // Empleados: Recepcionista solo puede LEER
+                authConfig.requestMatchers(HttpMethod.GET, "/api/empleados/**").hasRole("RECEPCIONISTA");
+
+                // Administradores (usuarios del sistema): Recepcionista solo puede LEER
+                // Aquí usamos hasAuthority porque es un permiso específico para leer usuarios del sistema.
+                // Podrías usar hasRole("RECEPCIONISTA") si el RECEPCIONISTA es el único rol aparte del ADMIN que puede leerlos.
+                authConfig.requestMatchers(HttpMethod.GET, "/api/administradores/**").hasAuthority(Permisos.ADMINISTRADOR_READ.name());
+
+
+                // Regla general para ADMINISTRADOR (Dueño): Si no coincide con las reglas anteriores,
+                // solo el ADMINISTRADOR puede acceder a cualquier otra ruta en /api/.
+                // Esto incluye DELETE de empleados, y toda la gestión de administradores (excepto READ para RECEPCIONISTA),
+                // reportes y configuración.
+                authConfig.requestMatchers("/api/**").hasRole("ADMINISTRADOR");
     // ❌ Cualquier otra petición se bloquea
         authConfig.anyRequest().denyAll();
             });
