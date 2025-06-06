@@ -8,13 +8,12 @@ import { mail, lockClosed } from 'ionicons/icons'; //iconos importar
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, JsonPipe, IonIcon], //importar
+  imports: [ReactiveFormsModule, IonIcon], //importar
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent implements OnInit{
     formularioLogin!: FormGroup;
-    //iconos
     public mailIcon=mail;
     public lockClosedIcon=lockClosed;
     constructor(public authService:AuthServiceService, public router:Router) {}
