@@ -11,8 +11,7 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent, canActivate:[preventLoggedInAccessGuard] },
   // Panel (layout + secciones), cuando el usuario navega a /panel se carga el loyoutC
     {
-    path: 'panel',
-    component: LoyoutComponent,
+    path: 'panel', component: LoyoutComponent,
     canActivate: [authGuard], //sin auth nisiquiera cargará las rutas hijas
     children: [
         { path: '', redirectTo: 'inicio', pathMatch: 'full' }, //en /panel/"raiz" se carga inicio como ContenidoPrincip

@@ -1,58 +1,68 @@
-<!---Esto es el componente loyout y aquí esta su html--->
-<!-- Navbar Superior -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <!-- Logo/Enlace principal -->
-    <a class="navbar-brand" routerLink="/panel">💈 Barbería Admin</a>
-    <!-- Toggler para colapsar el menú en pantallas pequeñas -->
-    <button 
-      class="navbar-toggler" 
-      type="button" 
-      data-bs-toggle="collapse" 
-      data-bs-target="#navbarSupportedContent" 
-      aria-controls="navbarSupportedContent" 
-      aria-expanded="false" 
-      aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+    <button
+      class="btn btn-primary"
+      type="button"
+      data-bs-toggle="offcanvas"
+      data-bs-target="#offcanvasSidebar"
+      aria-controls="offcanvasSidebar"
+      aria-label="Toggle sidebar"
+    >
+      ☰ </button>
 
-    <!-- Menú desplegable (colapsable) -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/panel/perfil">👤 Perfil</a>
-        </li>
-        <li class="nav-item">
-          <button class="btn nav-link text-start bg-transparent border-0" (click)="logout()" title="Cerrar sesión">
-            🚪 Salir
-          </button>
-        </li>
-      </ul>
-    </div>
+    <a class="navbar-brand mx-auto" routerLink="/panel">💈 Barbería Admin</a>
+
+    <div class="d-none d-lg-block">
+        </div>
+
   </div>
 </nav>
 
-<!-- Layout con Sidebar + Contenido -->
-<div class="d-flex">
-  <!-- Sidebar Lateral -->
-  <div class="bg-light border-end p-3" style="width: 250px; min-height: 100vh;">
-    <h5>📋 Panel</h5>
+<div
+  class="offcanvas offcanvas-start bg-light border-end"
+  tabindex="-1"
+  id="offcanvasSidebar"
+  aria-labelledby="offcanvasSidebarLabel"
+  style="width: 250px;"
+>
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasSidebarLabel">📋 Panel</h5>
+    <button
+      type="button"
+      class="btn-close text-reset"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="offcanvas-body p-3">
     <ul class="nav flex-column">
       <li class="nav-item">
-        <a class="nav-link" routerLink="/panel/puestos" routerLinkActive="active">💺 Puestos</a>
+        <a class="nav-link" routerLink="/panel/puestos" routerLinkActive="active" data-bs-dismiss="offcanvas">💺 Puestos</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/panel/usuarios" routerLinkActive="active">👥 Usuarios</a>
+        <a class="nav-link" routerLink="/panel/usuarios" routerLinkActive="active" data-bs-dismiss="offcanvas">👥 Usuarios</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/panel/reportes" routerLinkActive="active">📈 Reportes</a>
+        <a class="nav-link" routerLink="/panel/reportes" routerLinkActive="active" data-bs-dismiss="offcanvas">📈 Reportes</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/panel/perfil" data-bs-dismiss="offcanvas">👤 Perfil</a>
+      </li>
+      <li class="nav-item">
+        <button
+          class="btn nav-link text-start bg-transparent border-0"
+          (click)="logout()"
+          title="Cerrar sesión"
+          data-bs-dismiss="offcanvas"
+        >
+          🚪 Salir
+        </button>
       </li>
     </ul>
   </div>
-
-  <!-- Contenido principal dinámico -->
-  <div class="flex-grow-1 p-4">
-    <router-outlet></router-outlet>
-  </div>
 </div>
+
+<main class="flex-grow-1 p-4 content-area-scroll" style="min-height: calc(100vh - 56px);">
+  <router-outlet></router-outlet>
+</main>
 

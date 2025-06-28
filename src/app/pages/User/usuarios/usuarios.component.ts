@@ -33,7 +33,8 @@ export class UsuariosComponent implements OnInit{
     });
   }
 
-  eliminarUsuario(id: number){
+  eliminarUsuario(id: number)
+  {
     this.usuarioService.eliminar(id).subscribe({
       next: (data)=> {
         //opcional un mensaje de exito
@@ -44,10 +45,12 @@ export class UsuariosComponent implements OnInit{
     }
   });
   }
-  editarUsuario(id:number){
+  editarUsuario(id:number)
+  {
     this.router.navigate(['/panel/usuarios/editar', id]);
   }
-  crearUsuario(){
+  crearUsuario()
+  {
     this.router.navigate(['/panel/usuarios/crear']);
   }
 }

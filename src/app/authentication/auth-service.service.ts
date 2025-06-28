@@ -9,7 +9,7 @@ import { dtoJwt } from '../model/AuthUser/dtoJwt';
   providedIn: 'root'
 })
 export class AuthServiceService {
-  private apiUrl='http://localhost:8080/api/';
+  private apiUrl='http://localhost:8080/api/auth/';
   constructor(private http:HttpClient, private router:Router) {}
 
   login(dtoAuth: authDto):Observable<dtoJwt>{
